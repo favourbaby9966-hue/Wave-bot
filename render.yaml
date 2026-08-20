@@ -1,0 +1,27 @@
+# One-click Render deploy for the WA Automator bot host.
+# Click "Deploy to Render" from the Connect page, then set API_KEY when prompted.
+services:
+  - type: worker
+    name: wa-automator-bot
+    runtime: node
+    plan: free
+    buildCommand: npm install
+    startCommand: npm start
+    autoDeploy: true
+    envVars:
+      - key: DASHBOARD_URL
+        value: https://wave-pilot-pro.lovable.app
+      - key: API_KEY
+        sync: false
+      - key: DEVICE_NAME
+        value: Render Bot
+      - key: POLL_INTERVAL_MS
+        value: 15000
+      - key: COMMANDS_REFRESH_MS
+        value: 60000
+      - key: BROADCAST_DELAY_MS
+        value: 3500
+    disk:
+      name: wa-session
+      mountPath: /opt/render/project/src/.wwebjs_auth
+      sizeGB: 1
